@@ -1,0 +1,17 @@
+version: '1'
+services:
+
+  es:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+      labels:
+        - "es-8.1.3-lemmagen"
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./config/lemmagen:/home/es/app/elasticsearch-8.1.3/config/lemmagen
+      - /tmp/logs:/home/es/app/elasticsearch-8.1.3/logs
+    restart: always
