@@ -2,7 +2,7 @@
 
 ## elasticsearch docker image build
 1. docker-compose -f docker-compose.yaml build es  
-Please wait a few minutes until it is finish.
+Wait a few minutes until it is finished.
 
 
 ## elasticsearch start docker container 

@@ -19,7 +19,7 @@ RUN chown -R es:es $ES_HOME
 USER es
 WORKDIR $ES_HOME
 
-ENTRYPOINT [ "./bin/elasticsearch", "-E", "xpack.security.enabled=false", "-E", "network.host=0.0.0.0", "-E", "node.name=${HOSTNAME}", "-E", "cluster.initial_master_nodes=[\"${HOSTNAME}\"]" ]
+ENTRYPOINT [ "./bin/elasticsearch", "-E", "xpack.security.enabled=false", "-E", "network.host=0.0.0.0", "-E", "node.name=${HOSTNAME}", "-E", "cluster.initial_master_nodes=${HOSTNAME}" ]
 
 
 
