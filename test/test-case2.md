@@ -3,15 +3,15 @@
 
 
 
-## env
+## Instalation
 ### Lemmagen-analyzer-slovak + Lemmagen-analyzer-slovene
-elasticsearch8.1.3 + Lemmagen
+elasticsearch8.1.3 + Lemmagen (https://github.com/vhyza/elasticsearch-analysis-lemmagen/tree/v8.1.3)
 
 ### Slovak-extra-analyzer + Slovene-synonym-analyzer
 elasticsearch7.10.2 
 org.wikimedia.search:extra:7.10.2-wmf1 
-extra-analysis-slovak:7.10.2-wmf1 
-elasticsearch-slovencina
+extra-analysis-slovak:7.10.2-wmf1 (https://github.com/vhyza/elasticsearch-analysis-lemmagen/tree/v8.1.3)
+elasticsearch-slovencina (https://github.com/SlovakNationalGallery/elasticsearch-slovencina)
 
 
 
