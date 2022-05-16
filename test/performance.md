@@ -43,7 +43,7 @@ We take the analysis results of English text by the built-in tokenizer as the st
 
 1. Create filter for slovak
 ```bash
-curl --location --request PUT 'https://localhost:9200/lemmagen-sk' \
+curl --location --request PUT 'http://localhost:9200/lemmagen-sk' \
 --header 'Content-Type: application/json' \
 --data-raw '{
   "settings": {
@@ -53,6 +53,11 @@ curl --location --request PUT 'https://localhost:9200/lemmagen-sk' \
           "lemmagen_filter_sk": {
             "type": "lemmagen",
             "lexicon": "sk"
+          },
+          "stop_sk": {
+              "type": "stop",
+              "stopwords_path": "stop-words/sk.txt",
+              "ignore_case": true
           }
         }
       }
@@ -69,7 +74,7 @@ curl --location --request PUT 'https://localhost:9200/lemmagen-sk' \
 ```
 2. Create filter for slovene
 ```bash
-curl --location --request PUT 'https://localhost:9200/lemmagen-sl' \
+curl --location --request PUT 'http://localhost:9200/lemmagen-sl' \
 --header 'Content-Type: application/json' \
 --data-raw '{
   "settings": {
@@ -79,6 +84,11 @@ curl --location --request PUT 'https://localhost:9200/lemmagen-sl' \
           "lemmagen_filter_sl": {
             "type": "lemmagen",
             "lexicon": "sl"
+          },
+          "stop_sk": {
+              "type": "stop",
+              "stopwords_path": "stop-words/sk.txt",
+              "ignore_case": true
           }
         }
       }
@@ -101,7 +111,7 @@ curl --location --request PUT 'https://localhost:9200/lemmagen-sl' \
 
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "uax_url_email",
@@ -147,7 +157,8 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "uax_url_email",
       "filter": [
@@ -194,7 +205,8 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "uax_url_email",
       "filter": [
@@ -257,7 +269,7 @@ Response:
 1. English
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --data-raw '{
   "tokenizer" : "standard",
   "filter" : ["lowercase"],
@@ -302,7 +314,8 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -358,7 +371,8 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -414,7 +428,7 @@ Response:
 1. English
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --data-raw '{
   "tokenizer" : "standard",
   "filter" : ["uppercase"],
@@ -459,7 +473,8 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -515,7 +530,8 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -571,7 +587,7 @@ Response:
 1. English
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --data-raw '{
   "tokenizer": "standard",
   "filter": [ "stop" ],
@@ -630,12 +646,12 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
-        "lemmagen_filter_sk",
-        "stop"
+        "stop_sk"
     ],
   "text": "Počasie je dnes naozaj pekné"
 }
@@ -686,12 +702,12 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
-        "lemmagen_filter_sl",
-        "stop"
+        "stop_sl"
     ],
   "text": "Vreme je danes res lepo"
 }
@@ -743,7 +759,7 @@ Response:
 1. English
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --data-raw '{
   "tokenizer" : "standard",
   "filter" : ["trim"],
@@ -767,7 +783,8 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -795,7 +812,8 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -824,7 +842,7 @@ Response:
 1. English
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --data-raw '{
   "tokenizer": "standard",
   "filter": [ "kstem" ],
@@ -869,7 +887,8 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -910,7 +929,8 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -952,7 +972,7 @@ Response:
 1. English
 Request:
 ```bash
-curl --location --request POST 'https://localhost:9200/_analyze' \
+curl --location --request POST 'http://localhost:9200/_analyze' \
 --data-raw '{
   "tokenizer": "standard",
   "filter": [ "word_delimiter_graph" ],
@@ -1025,7 +1045,8 @@ Response:
 2. slovak
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sk/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
@@ -1081,7 +1102,8 @@ Response:
 3. slovene
 Request:
 ```bash
-curl --location --request GET 'https://localhost:9200/lemmagen-sl/_analyze' \
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
     "filter": [
