@@ -58,6 +58,11 @@ curl --location --request PUT 'http://localhost:9200/lemmagen-sk' \
               "type": "stop",
               "stopwords_path": "stop-words/sk.txt",
               "ignore_case": true
+          },
+          "synonym_sk": {
+              "type": "synonym",
+              "synonyms_path": "synonyms/sk.txt",
+              "ignore_case": true
           }
         }
       }
@@ -85,9 +90,9 @@ curl --location --request PUT 'http://localhost:9200/lemmagen-sl' \
             "type": "lemmagen",
             "lexicon": "sl"
           },
-          "stop_sk": {
+          "stop_sl": {
               "type": "stop",
-              "stopwords_path": "stop-words/sk.txt",
+              "stopwords_path": "stop-words/sl.txt",
               "ignore_case": true
           }
         }
@@ -108,7 +113,6 @@ curl --location --request PUT 'http://localhost:9200/lemmagen-sl' \
 - UAX URL Email Tokenizer
 
 1. English
-
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
@@ -153,7 +157,6 @@ Response:
     ]
 }
 ```
-
 2. slovak
 Request:
 ```bash
@@ -266,6 +269,7 @@ Response:
 ```
 
 - Lowercase
+
 1. English
 Request:
 ```bash
@@ -424,7 +428,9 @@ Response:
     ]
 }
 ```
+
 - Uppercase
+
 1. English
 Request:
 ```bash
@@ -583,7 +589,9 @@ Response:
     ]
 }
 ```
+
 - Stop
+
 1. English
 Request:
 ```bash
@@ -755,7 +763,296 @@ Response:
     ]
 }
 ```
+
+- Synonym
+1. English
+Request:
+```bash
+curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "tokenizer": "standard",
+    "filter": {
+        "type": "synonym",
+        "lenient": true,
+        "synonyms": [
+            "dog => canine"
+        ]
+    },
+    "text": "a quick fox jumps over the lazy dog"
+}'
+```
+Response:
+```bash
+{
+    "tokens": [
+        {
+            "token": "a",
+            "start_offset": 0,
+            "end_offset": 1,
+            "type": "<ALPHANUM>",
+            "position": 0
+        },
+        {
+            "token": "quick",
+            "start_offset": 2,
+            "end_offset": 7,
+            "type": "<ALPHANUM>",
+            "position": 1
+        },
+        {
+            "token": "fox",
+            "start_offset": 8,
+            "end_offset": 11,
+            "type": "<ALPHANUM>",
+            "position": 2
+        },
+        {
+            "token": "jumps",
+            "start_offset": 12,
+            "end_offset": 17,
+            "type": "<ALPHANUM>",
+            "position": 3
+        },
+        {
+            "token": "over",
+            "start_offset": 18,
+            "end_offset": 22,
+            "type": "<ALPHANUM>",
+            "position": 4
+        },
+        {
+            "token": "the",
+            "start_offset": 23,
+            "end_offset": 26,
+            "type": "<ALPHANUM>",
+            "position": 5
+        },
+        {
+            "token": "lazy",
+            "start_offset": 27,
+            "end_offset": 31,
+            "type": "<ALPHANUM>",
+            "position": 6
+        },
+        {
+            "token": "canine",
+            "start_offset": 32,
+            "end_offset": 35,
+            "type": "SYNONYM",
+            "position": 7
+        }
+    ]
+}
+```
+2. slovak
+Request:
+```bash
+curl --location --request GET 'http://localhost:9200/lemmagen-sk/_analyze' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "tokenizer": "standard",
+    "filter": [
+        "lemmagen_filter_sk",
+        "synonym_sk"
+    ],
+  "text": "Počasie je dnes naozaj pekné"
+}
+'
+```
+Response:
+```
+{
+    "tokens": [
+        {
+            "token": "Počasie",
+            "start_offset": 0,
+            "end_offset": 7,
+            "type": "<ALPHANUM>",
+            "position": 0
+        },
+        {
+            "token": "jesť",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "<ALPHANUM>",
+            "position": 1
+        },
+        {
+            "token": "obedovať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "požierať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "stolovať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "súkať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "večerať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "živiť",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "žrať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "konzumovať",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "tráviť",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "SYNONYM",
+            "position": 1
+        },
+        {
+            "token": "dnes",
+            "start_offset": 11,
+            "end_offset": 15,
+            "type": "<ALPHANUM>",
+            "position": 2
+        },
+        {
+            "token": "sa",
+            "start_offset": 11,
+            "end_offset": 15,
+            "type": "SYNONYM",
+            "position": 2
+        },
+        {
+            "token": "naozaj",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "<ALPHANUM>",
+            "position": 3
+        },
+        {
+            "token": "fakticky",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "namojdušu",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "skutočne",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "veru",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "vskutku",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "vážny",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "čestný",
+            "start_offset": 16,
+            "end_offset": 22,
+            "type": "SYNONYM",
+            "position": 3
+        },
+        {
+            "token": "pekný",
+            "start_offset": 23,
+            "end_offset": 28,
+            "type": "<ALPHANUM>",
+            "position": 4
+        },
+        {
+            "token": "slovo",
+            "start_offset": 23,
+            "end_offset": 28,
+            "type": "SYNONYM",
+            "position": 4
+        },
+        {
+            "token": "driečny",
+            "start_offset": 23,
+            "end_offset": 28,
+            "type": "SYNONYM",
+            "position": 4
+        },
+        {
+            "token": "vzhľadný",
+            "start_offset": 23,
+            "end_offset": 28,
+            "type": "SYNONYM",
+            "position": 4
+        },
+        {
+            "token": "švárny",
+            "start_offset": 23,
+            "end_offset": 28,
+            "type": "SYNONYM",
+            "position": 4
+        }
+    ]
+}
+```
+
+
 - Trim
+
 1. English
 Request:
 ```bash
@@ -838,7 +1135,9 @@ Response:
     ]
 }
 ```
+
 - Kstem
+
 1. English
 Request:
 ```bash
@@ -968,7 +1267,9 @@ Response:
     ]
 }
 ```
+
 - Word delimiter graph
+
 1. English
 Request:
 ```bash

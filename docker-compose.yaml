@@ -16,3 +16,4 @@ services:
     volumes:
       - ./config/lemmagen:/usr/share/elasticsearch/config/lemmagen
       - ./config/stop-words:/usr/share/elasticsearch/config/stop-words
+      - ./config/synonyms:/usr/share/elasticsearch/config/synonyms
