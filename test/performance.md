@@ -274,6 +274,7 @@ Response:
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer" : "standard",
   "filter" : ["lowercase"],
@@ -435,6 +436,7 @@ Response:
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer" : "standard",
   "filter" : ["uppercase"],
@@ -596,6 +598,7 @@ Response:
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
   "filter": [ "stop" ],
@@ -1057,6 +1060,7 @@ Response:
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer" : "standard",
   "filter" : ["trim"],
@@ -1142,6 +1146,7 @@ Response:
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
   "filter": [ "kstem" ],
@@ -1274,6 +1279,7 @@ Response:
 Request:
 ```bash
 curl --location --request POST 'http://localhost:9200/_analyze' \
+--header 'Content-Type: application/json' \
 --data-raw '{
   "tokenizer": "standard",
   "filter": [ "word_delimiter_graph" ],
