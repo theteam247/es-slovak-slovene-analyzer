@@ -15,7 +15,7 @@ mkdir lemmagen
 cd lemmagen
 wget https://github.com/vhyza/lemmagen-lexicons/raw/master/free/lexicons/en.lem
 wget https://github.com/vhyza/lemmagen-lexicons/raw/master/free/lexicons/sk.lem
-wget https://github.com/vhyza/lemmagen-lexicons/raw/master/free/lexicons/sk.lem
+wget https://github.com/vhyza/lemmagen-lexicons/raw/master/free/lexicons/sl.lem
 
 cd /usr/share/elasticsearch/config
 mkdir stop-words
