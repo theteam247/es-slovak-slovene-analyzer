@@ -3,9 +3,18 @@
 ### Steps
 
 #### 1. Install lemmagen plugin
+
+##### For elasticsearch version 7.2.0
 ```
 cd /usr/share/elasticsearch
-./bin/elasticsearch-plugin install https://github.com/vhyza/elasticsearch-analysis-lemmagen/releases/download/v8.1.3/elasticsearch-analysis-lemmagen-8.1.3-plugin.zip
+
+./bin/elasticsearch-plugin install https://github.com/vhyza/elasticsearch-analysis-lemmagen/releases/download/v7.2.0/elasticsearch-analysis-lemmagen-7.2.0-plugin.zip
+```
+##### For elasticsearch version 6.2.0
+```
+cd /usr/share/elasticsearch
+
+./bin/elasticsearch-plugin install https://github.com/vhyza/elasticsearch-analysis-lemmagen/releases/download/v6.2.0/elasticsearch-analysis-lemmagen-6.2.0-plugin.zip
 ```
 
 #### 2. Copy config file
