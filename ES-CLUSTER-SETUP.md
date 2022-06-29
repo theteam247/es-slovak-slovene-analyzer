@@ -43,3 +43,95 @@ After plugin installation and elasticsearch restart you should see in logs somet
 ```
 [2022-06-07T17:46:09,038][INFO ][o.e.p.PluginsService] [1rZCAqs] loaded plugin [elasticsearch-analysis-lemmagen]
 ```
+
+#### 4. Add analyzer to an existing index
+
+- Create Index without analyzer
+
+```
+curl --location --request PUT 'http://localhost:9200/lemmagen-sl' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "mappings": {
+        "properties": {
+            "text": {
+                "type": "text"
+            }
+        }
+    }
+}'
+```
+
+- Close index
+> After the index is closed, the index can no longer be read or written
+```
+curl --location --request POST 'http://localhost:9200/lemmagen-sl/_close' \
+--header 'Content-Type: application/json' \
+--data-raw ''
+```
+- Add analyzer and filter
+```
+curl --location --request PUT 'http://localhost:9200/lemmagen-sl/_settings' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "analysis": {
+        "analyzer": {
+            "sl_analyzer":{
+               "type":"custom",
+               "tokenizer":"uax_url_email",
+               "filter":[
+                  "lowercase",
+                  "lemmagen_filter_sl"
+               ]
+            }
+        },
+        "filter": {
+            "lemmagen_filter_sl": {
+                "type": "lemmagen",
+                "lexicon": "sl"
+            }
+        }
+    }
+}'
+```
+- Open index
+```
+curl --location --request POST 'http://localhost:9200/lemmagen-sl/_open' \
+--header 'Content-Type: application/json' \
+--data-raw ''
+```
+- Add new properties to index with analyzer
+```
+curl --location --request PUT 'http://localhost:9200/lemmagen-sl/_mapping' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "properties": {
+        "new_text": {
+            "type": "text",
+            "analyzer": "sl_analyzer"
+        }
+    }
+}'
+```
+- Put example doc
+```
+curl --location --request PUT 'http://localhost:9200/lemmagen-sl/_doc/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "new_text": "Vreme je DANES Res lEpO"
+}'
+```
+
+- Search text
+> sl_analyzer will decompose `Vreme je DANES Res lEpO` into `vreme`, `biti`, `danes`, `res`, `lepo`
+```
+curl --location --request GET 'http://localhost:9200/lemmagen-sl/_search' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "query": {
+        "query_string": {
+            "query": "biti"
+        }
+    }
+}'
+```
